@@ -1,0 +1,103 @@
+project link to plunker:
+
+http://plnkr.co/edit/cLeYd4tNG9d3bdEciuDO
+
+HTML
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+script.jsx
+
+var ShopCart = React.createClass({
+  getInitialState: function() {
+    
+    return {qty: 0};
+  },
+  
+  buy: function () {
+    this.setState({qty: this.state.qty +1});
+    this.props.handleTotal(this.props.price);
+    alert("Apple iPhone is Awesome!")
+  },
+  
+  show: function () {
+  this.props.handleShow(this.props.name);  
+  },
+  
+  render: function(){
+    return (
+      <div>
+        <h2>ShopCartList App!!</h2>
+        <p>{this.props.name} £{this.props.price}</p>
+        <button onClick={this.buy}>Buy</button>
+        <button onClick={this.show}>Show</button>
+        <h3>Qty: {this.state.qty} item(s)</h3>
+        <hr/>
+      </div>
+    );
+  }
+});
+
+
+var Total = React.createClass({
+  render: function() {
+    return (
+      <div>
+      <h3>Total Cash: £{this.props.Total}</h3>
+      </div>
+      );
+  }
+});
+
+
+var ShopCartList = React.createClass({
+  getInitialState: function() {
+    return {Total: 0};
+  },
+  
+  calculateTotal: function(price) {
+    this.setState({Total: this.state.Total + price});
+    alert(this.state.Total);
+  },
+  
+  showProduct: function(name) {
+    alert("You Selected" + name);
+  },  
+  render: function() {
+    return (
+    <div>
+    <ShopCart name="iPhone 5s" price={399} 
+        handleShow={this.showProduct} 
+        handleTotal={this.calculateTotal}/>
+    <ShopCart name="iPhone 6s" price={599} 
+        handleShow={this.showProduct}
+        handleTotal={this.calculateTotal}/>
+    <ShopCart name="iPhone 7" plus price={799} 
+        handleShow={this.showProduct}
+        handleTotal={this.calculateTotal}/>
+    <Total total={this.state.Total}/>
+    </div>
+    );
+    
+  }
+  
+});
+ReactDOM.render(<ShopCartList/>, document.getElementById("root"));
+
+
+
+
+
+
+
